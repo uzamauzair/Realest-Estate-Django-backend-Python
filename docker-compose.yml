@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile.backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - "DJANGO_DB_HOST=db"
+      - "DJANGO_DB_PORT=5432"
+      - "DJANGO_DB_NAME=realest_estate"
+      - "DJANGO_DB_USER=postgres"
+      - "DJANGO_DB_PASSWORD=1234"
+
+  db:
+    image: postgres:14
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - "POSTGRES_DB=realest_estate"
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=1234"
+
+volumes:
+  postgres_data:
