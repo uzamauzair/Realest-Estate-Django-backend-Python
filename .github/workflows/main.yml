@@ -35,5 +35,6 @@ jobs:
         ECR_REPOSITORY: realestate_django_container
         IMAGE_TAG: ${{ github.sha }}
       run: |
+        ls -la
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
